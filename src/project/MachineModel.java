@@ -76,7 +76,7 @@ public class MachineModel {
 			cpu.instructionPointer = arg;
 		});			
 		
-		//INSTRUCTION_MAP entry for "JMPRZ"
+		//INSTRUCTION_MAP entry for "JMPZR"
 		INSTRUCTIONS.put(0x9, arg -> {
 			if (cpu.accumulator == 0 ) INSTRUCTIONS.get(0x6).execute(arg);
 			else cpu.incrementIP(1);
