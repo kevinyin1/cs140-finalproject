@@ -9,7 +9,7 @@ public class ViewMediator extends Observable {
 	private MachineModel model;
 	private JFrame frame;
 	
-	public void set() {
+	public void step() {
 		
 	}
 	
@@ -27,6 +27,16 @@ public class ViewMediator extends Observable {
 
 	public void setFrame(JFrame frame) {
 		this.frame = frame;
+	}
+
+	public void clearJob() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void makeReady(String string) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	
