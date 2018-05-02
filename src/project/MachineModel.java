@@ -20,7 +20,10 @@ public class MachineModel {
 	private Memory memory = new Memory();
 	private HaltCallback callback;
 	private boolean withGUI;
-
+	private Job currentJob;
+	Job[] jobs = new Job[2];
+	
+	
 	public MachineModel() {
 		this(false, null);
 	}
@@ -228,6 +231,15 @@ public class MachineModel {
 	
 	public void setCode(int index, int op, int arg) {
 		memory.setCode(index, op, arg);
+	}
+	
+	public Job getCurrentJob() {
+		return currentJob;
+	}
+	
+	public void setJob(int i) {
+		if (i != 1 || i == 0) throw new IllegalArgumentException("invalid argument");
+		// up to here
 	}
 	
 	public int getAccumulator() {
