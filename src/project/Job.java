@@ -25,7 +25,7 @@ public class Job {
 		this.currentAcc = currentAccumulator;
 	}
 
-	public int getStartcodeIndex() {
+	public int getStartCodeIndex() {
 		return startcodeIndex;
 	}
 
@@ -41,11 +41,11 @@ public class Job {
 		this.codeSize = codeSize;
 	}
 
-	public int getStartmemoryIndex() {
+	public int getStartMemoryIndex() {
 		return startmemoryIndex;
 	}
 
-	public void setStartmemoryIndex(int startmemoryIndex) {
+	public void setStartMemoryIndex(int startmemoryIndex) {
 		this.startmemoryIndex = startmemoryIndex;
 	}
 

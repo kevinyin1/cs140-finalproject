@@ -2,6 +2,7 @@ package project;
 
 import java.util.Map;
 import java.util.TreeMap;
+import projectview.States;
 
 public class MachineModel {
 
@@ -31,7 +32,15 @@ public class MachineModel {
 	public MachineModel(boolean withGUI, HaltCallback callback) {
 		this.withGUI = withGUI;
 		this.callback = callback;
-
+		jobs[0] = currentJob;
+		jobs[1] = new Job();
+		jobs[0].setStartcodeIndex(0);
+		jobs[0].setStartMemoryIndex(0);
+		jobs[0].setCurrentState(States.NOTHING_LOADED);
+		jobs[1].setStartcodeIndex(Memory.CODE_MAX / 4);
+		jobs[1].setStartMemoryIndex(Memory.DATA_SIZE / 2);
+		jobs[1].setCurrentState(States.NOTHING_LOADED);
+		
 		//INSTRUCTION_MAP entry for "NOP"
 		INSTRUCTIONS.put(0x0, arg -> {
 			cpu.incrementIP(1);
@@ -200,6 +209,9 @@ public class MachineModel {
 			callback.halt();
 		});	
 	}
+	public int getChangedIndex() {
+		return memory.getChangedIndex();
+	}
 	
 	public Instruction get(int index) {
 		return INSTRUCTIONS.get(index);
@@ -239,7 +251,36 @@ public class MachineModel {
 	
 	public void setJob(int i) {
 		if (i != 1 || i == 0) throw new IllegalArgumentException("invalid argument");
-		// up to here
+		currentJob.setCurrentAcc(getAccumulator());
+		currentJob.setCurrentIP(getInstructionPointer());
+		jobs[i] = currentJob;
+		setAccumulator(currentJob.getCurrentAcc());
+		setInstructionPointer(currentJob.getCurrentIP());
+		setMemoryBase(currentJob.getStartMemoryIndex());
+	}
+	
+	public States getCurrentState() {
+		return currentJob.getCurrentState();
+	}
+	
+	public void clearJob() {
+		memory.clearData(currentJob.getStartMemoryIndex(), currentJob.getStartMemoryIndex() + Memory.DATA_SIZE / 2);
+		memory.clearCode(currentJob.getStartCodeIndex(), currentJob.getStartCodeIndex() + currentJob.getCodeSize());
+		setAccumulator(0);
+		setInstructionPointer(currentJob.getStartCodeIndex());
+		currentJob.reset();
+	}
+	
+	public void set() {
+		try {
+			if (currentJob.getStartCodeIndex() <= getInstructionPointer() &&
+					getInstructionPointer() < currentJob.getStartCodeIndex() + currentJob.getCodeSize())
+				throw new CodeAccessException("instruction pointer is not between the currentJob code restraints");
+			get(memory.getOp(getInstructionPointer())).execute(memory.getArg(getInstructionPointer()));
+		} catch (Exception e) {
+			callback.halt();
+			throw e;
+		}
 	}
 	
 	public int getAccumulator() {
