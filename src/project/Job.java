@@ -29,7 +29,7 @@ public class Job {
 		return startcodeIndex;
 	}
 
-	public void setStartcodeIndex(int startcodeIndex) {
+	public void setStartCodeIndex(int startcodeIndex) {
 		this.startcodeIndex = startcodeIndex;
 	}
 

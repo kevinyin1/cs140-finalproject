@@ -21,7 +21,7 @@ public class MachineModel {
 	private Memory memory = new Memory();
 	private HaltCallback callback;
 	private boolean withGUI;
-	private Job currentJob;
+	private Job currentJob = new Job();
 	Job[] jobs = new Job[2];
 	
 	
@@ -34,10 +34,10 @@ public class MachineModel {
 		this.callback = callback;
 		jobs[0] = currentJob;
 		jobs[1] = new Job();
-		jobs[0].setStartcodeIndex(0);
+		jobs[0].setStartCodeIndex(0);
 		jobs[0].setStartMemoryIndex(0);
 		jobs[0].setCurrentState(States.NOTHING_LOADED);
-		jobs[1].setStartcodeIndex(Memory.CODE_MAX / 4);
+		jobs[1].setStartCodeIndex(Memory.CODE_MAX / 4);
 		jobs[1].setStartMemoryIndex(Memory.DATA_SIZE / 2);
 		jobs[1].setCurrentState(States.NOTHING_LOADED);
 		
@@ -85,7 +85,7 @@ public class MachineModel {
 		
 		//INSTRUCTION_MAP entry for "JUMPI"
 		INSTRUCTIONS.put(0x8, arg -> {
-			cpu.instructionPointer = arg;
+			cpu.instructionPointer = currentJob.getStartCodeIndex() + arg;
 		});			
 		
 		//INSTRUCTION_MAP entry for "JMPZR"
