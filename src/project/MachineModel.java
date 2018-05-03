@@ -277,8 +277,8 @@ public class MachineModel {
 	
 	public void step() {
 		try {
-			if (currentJob.getStartCodeIndex() <= getInstructionPointer() &&
-					getInstructionPointer() < currentJob.getStartCodeIndex() + currentJob.getCodeSize())
+			if (!(currentJob.getStartCodeIndex() <= getInstructionPointer() &&
+					getInstructionPointer() < currentJob.getStartCodeIndex() + currentJob.getCodeSize()))
 				throw new CodeAccessException("instruction pointer is not between the currentJob code restraints");
 			get(memory.getOp(getInstructionPointer())).execute(memory.getArg(getInstructionPointer()));
 		} catch (Exception e) {
