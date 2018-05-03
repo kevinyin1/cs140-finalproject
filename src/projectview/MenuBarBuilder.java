@@ -77,7 +77,7 @@ public class MenuBarBuilder implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		assemble.setEnabled(view.getCurrentState().getAssembleFileActive());
 		load.setEnabled(view.getCurrentState().getLoadFileActive());
-		go.setEnabled(view.getCurrentState().getRunningActive());
+		go.setEnabled(view.getCurrentState().getRunPauseActive());
 		job0.setEnabled(view.getCurrentState().getChangeJobActive());
 		job1.setEnabled(view.getCurrentState().getChangeJobActive());
 	}

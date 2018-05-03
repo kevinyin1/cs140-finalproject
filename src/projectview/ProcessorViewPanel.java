@@ -38,6 +38,8 @@ public class ProcessorViewPanel implements Observer {
 	public void update(Observable arg0, Object arg1) {
 		if(model != null) {
 			acc.setText("" + model.getAccumulator());
+			iP.setText("" + model.getInstructionPointer());
+			mB.setText("" + model.getMemoryBase());
 		}
 	}
 	
