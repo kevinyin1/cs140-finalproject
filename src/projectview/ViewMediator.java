@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.util.Observable;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -24,7 +25,7 @@ public class ViewMediator extends Observable {
 	private MemoryViewPanel memoryViewPanel3;
 	// private ControlPanel controlPanel;
 	// private ProcessorViewPanel processorPanel;
-	// private MenuBarBuilder menuBuilder;
+	private MenuBarBuilder menuBuilder;
 	private JFrame frame;
 	private FilesManager filesManager;
 	private Animator animator;
@@ -39,7 +40,7 @@ public class ViewMediator extends Observable {
 		memoryViewPanel3 = new MemoryViewPanel(this, model, Memory.DATA_SIZE / 2, Memory.DATA_SIZE);
 		// controlPanel = new ControlPanel(this);
 		// processorPanel = new ProcessorPanel(this);
-		// menuBarBuilder = new MenuBarBuilder(this);
+		menuBuilder = new MenuBarBuilder(this);
 		frame = new JFrame("Simulator");
 		Container content = frame.getContentPane();
 		content.setLayout(new BorderLayout());
@@ -50,6 +51,11 @@ public class ViewMediator extends Observable {
 		center.add(memoryViewPanel1.createMemoryDisplay());
 		center.add(memoryViewPanel2.createMemoryDisplay());
 		center.add(memoryViewPanel3.createMemoryDisplay());
+		JMenuBar bar = new JMenuBar();
+		frame.setJMenuBar(bar);
+		bar.add(menuBuilder.createFileMenu());
+		bar.add(menuBuilder.createExecuteMenu());
+		bar.add(menuBuilder.createJobsMenu());
 		frame.add(center, BorderLayout.CENTER);
 		// Return here for the other GUI components
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,8 +80,8 @@ public class ViewMediator extends Observable {
 				JOptionPane.showMessageDialog(frame, "Program error from line " + model.getInstructionPointer() + "\n"
 						+ "Exception message: " + e.getMessage(), "Run time error", JOptionPane.OK_OPTION);
 			} catch (DivideByZeroException e) { // import project.DivideByZeroException at the start of the class
-				JOptionPane.showMessageDialog(frame, "DiviedByZeroException from line " + model.getInstructionPointer() + "\n"
-						+ "Exception message: " + e.getMessage(), "Run time error", JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(frame, "DiviedByZeroException from line " + model.getInstructionPointer()
+						+ "\n" + "Exception message: " + e.getMessage(), "Run time error", JOptionPane.OK_OPTION);
 			}
 			setChanged();
 			notifyObservers();
@@ -99,14 +105,14 @@ public class ViewMediator extends Observable {
 				JOptionPane.showMessageDialog(frame, "Program error from line " + model.getInstructionPointer() + "\n"
 						+ "Exception message: " + e.getMessage(), "Run time error", JOptionPane.OK_OPTION);
 			} catch (DivideByZeroException e) { // import project.DivideByZeroException at the start of the class
-				JOptionPane.showMessageDialog(frame, "DiviedByZeroException from line " + model.getInstructionPointer() + "\n"
-						+ "Exception message: " + e.getMessage(), "Run time error", JOptionPane.OK_OPTION);
+				JOptionPane.showMessageDialog(frame, "DiviedByZeroException from line " + model.getInstructionPointer()
+						+ "\n" + "Exception message: " + e.getMessage(), "Run time error", JOptionPane.OK_OPTION);
 			}
 		}
 		setChanged();
 		notifyObservers();
 	}
-	
+
 	public void clearJob() {
 		model.clearJob();
 		model.setCurrentState(States.NOTHING_LOADED);
@@ -204,10 +210,7 @@ public class ViewMediator extends Observable {
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				ViewMediator mediator = new ViewMediator();
-				MachineModel model = new MachineModel(
-				// true,
-				// () -> mediator.setCurrentState(States.PROGRAM_HALTED)
-				);
+				MachineModel model = new MachineModel(true, () -> mediator.setCurrentState(States.PROGRAM_HALTED));
 				mediator.setModel(model);
 				mediator.createAndShowGUI();
 			}
