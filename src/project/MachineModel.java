@@ -250,7 +250,7 @@ public class MachineModel {
 	}
 	
 	public void setJob(int i) {
-		if (i != 1 || i == 0) throw new IllegalArgumentException("invalid argument");
+		if (i != 1 && i != 0) throw new IllegalArgumentException("invalid argument");
 		currentJob.setCurrentAcc(getAccumulator());
 		currentJob.setCurrentIP(getInstructionPointer());
 		jobs[i] = currentJob;

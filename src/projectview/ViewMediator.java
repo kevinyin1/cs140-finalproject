@@ -24,7 +24,7 @@ public class ViewMediator extends Observable {
 	private MemoryViewPanel memoryViewPanel2;
 	private MemoryViewPanel memoryViewPanel3;
 	// private ControlPanel controlPanel;
-	// private ProcessorViewPanel processorPanel;
+	private ProcessorViewPanel processorPanel;
 	private MenuBarBuilder menuBuilder;
 	private JFrame frame;
 	private FilesManager filesManager;
@@ -52,6 +52,8 @@ public class ViewMediator extends Observable {
 		center.add(memoryViewPanel2.createMemoryDisplay());
 		center.add(memoryViewPanel3.createMemoryDisplay());
 		JMenuBar bar = new JMenuBar();
+		processorPanel = new ProcessorViewPanel(this, model);
+		frame.add(processorPanel.createProcessorDisplay(),BorderLayout.PAGE_START);
 		frame.setJMenuBar(bar);
 		bar.add(menuBuilder.createFileMenu());
 		bar.add(menuBuilder.createExecuteMenu());
