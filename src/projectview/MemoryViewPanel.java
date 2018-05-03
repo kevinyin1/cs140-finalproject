@@ -41,7 +41,7 @@ public class MemoryViewPanel implements Observer {
 		Border border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLACK),
 				"Data Memory View [" + lower + "-" + upper + "]", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION);
 		panel.setBorder(border);
-		innerPanel.setBorder(border);
+		innerPanel.setLayout(new BorderLayout());
 		numPanel.setLayout(new GridLayout(0, 1));
 		decimalPanel.setLayout(new GridLayout(0, 1));
 		hexPanel.setLayout(new GridLayout(0, 1));
@@ -51,11 +51,11 @@ public class MemoryViewPanel implements Observer {
 		dataDecimal = new JTextField[upper - lower];
 		dataHex = new JTextField[upper - lower];
 		for(int i = lower; i < upper; i++) {
-			numPanel.add(new JLabel(i+": ", JLabel.RIGHT));
+			numPanel.add(new JLabel(i + ": ", JLabel.RIGHT));
 			dataDecimal[i - lower] = new JTextField(10);
-			dataHex[i-lower] = new JTextField(10);
-			decimalPanel.add(dataDecimal[i-lower]);
-			hexPanel.add(dataHex[i-lower]);
+			dataHex[i - lower] = new JTextField(10);
+			decimalPanel.add(dataDecimal[i - lower]);
+			hexPanel.add(dataHex[i - lower]);
 		}
 		scroller = new JScrollPane(innerPanel);
 		panel.add(scroller);

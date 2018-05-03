@@ -263,6 +263,10 @@ public class MachineModel {
 		return currentJob.getCurrentState();
 	}
 	
+	public void setCurrentState(States currentState) {
+		currentJob.setCurrentState(currentState);
+	}
+	
 	public void clearJob() {
 		memory.clearData(currentJob.getStartMemoryIndex(), currentJob.getStartMemoryIndex() + Memory.DATA_SIZE / 2);
 		memory.clearCode(currentJob.getStartCodeIndex(), currentJob.getStartCodeIndex() + currentJob.getCodeSize());
@@ -271,7 +275,7 @@ public class MachineModel {
 		currentJob.reset();
 	}
 	
-	public void set() {
+	public void step() {
 		try {
 			if (currentJob.getStartCodeIndex() <= getInstructionPointer() &&
 					getInstructionPointer() < currentJob.getStartCodeIndex() + currentJob.getCodeSize())
@@ -281,6 +285,14 @@ public class MachineModel {
 			callback.halt();
 			throw e;
 		}
+	}
+	
+	public String getHex(int i) {
+		return memory.getHex(i);
+	}
+	
+	public String getDecimal(int i) {
+		return memory.getDecimal(i);
 	}
 	
 	public int getAccumulator() {

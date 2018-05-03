@@ -13,6 +13,16 @@ public class Memory {
 		return code;
 	}
 	
+	public String getHex(int i) {
+		return Integer.toHexString(code[i * 2]).toUpperCase()
+				+ " " + Integer.toHexString(code[(i * 2) + 1]).toUpperCase();
+	}
+	
+	public String getDecimal(int i) {
+		return InstrMap.toMnemonic.get(code[2 * i]) +
+				" " + code[(2 * i) + 1];
+	}
+	
 	public int getOp(int i) {
 		return code[2*i];
 	}

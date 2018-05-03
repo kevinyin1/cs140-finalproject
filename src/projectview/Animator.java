@@ -13,7 +13,7 @@ public class Animator {
 		this.view = view;
 	}
 	
-	public void toggleAutoSetpOn() {
+	public void toggleAutoStepOn() {
 		autoStepOn = !autoStepOn;
 	}
 	
