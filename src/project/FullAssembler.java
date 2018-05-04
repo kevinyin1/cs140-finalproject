@@ -62,24 +62,30 @@ public class FullAssembler implements Assembler {
 			}
 			// Reads in data
 			if (!readingCode) {
-				try {
-					// Escape statement for reading in data
-					if (InstrMap.toCode.keySet().contains(arr_code[0]) && inputs > 0) {
-						readingCode = true;
-						continue;
-					}
-					if (arr_code.length != 2) {
-						error.append("\nError (" + inputFileName + ".pasm, " + (i + 1)
-								+ "): needs 2 number inputs");
-						continue;
-					}
-					int arg = Integer.parseInt(arr_code[0], 16);
-					int arg1 = Integer.parseInt(arr_code[1], 16);
-					inputs++;
+				// Escape statement for reading in data
+				if (InstrMap.toCode.keySet().contains(arr_code[0]) && inputs > 0) {
+					readingCode = true;
 					continue;
+				}
+				if (arr_code.length != 2) {
+					error.append("\nError (" + inputFileName + ".pasm, " + (i + 1)
+							+ "): needs 2 number inputs");
+					continue;
+				}
+				// tests if the first input is correct
+				try {
+					int arg = Integer.parseInt(arr_code[0], 16);
 				} catch (NumberFormatException e) {
 					error.append("\nError (" + inputFileName + ".pasm, " + (i + 1)
-							+ "): data has non-numeric memory address");
+							+ "): memory address is non-numeric");
+					continue;
+				}
+				//test if the second input is correct
+				try {
+					int arg = Integer.parseInt(arr_code[1], 16);
+				} catch (NumberFormatException e) {
+					error.append("\nError (" + inputFileName + ".pasm, " + (i + 1)
+							+ "): memory value is non-numeric");
 					continue;
 				}
 			}
