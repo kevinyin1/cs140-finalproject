@@ -38,6 +38,7 @@ public class InstrMap {
 		 toCode.put("NOT", 0x1A);
 		 toCode.put("CMPL", 0x1B); 
 		 toCode.put("CMPZ", 0x1C);
+		 toCode.put("JUMPN", 0x1D);
 		 toCode.put("HALT", 0x1F);
 		 
 		 for(String s : toCode.keySet()) {

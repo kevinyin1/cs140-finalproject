@@ -60,7 +60,14 @@ public class ViewMediator extends Observable {
 		bar.add(menuBuilder.createJobsMenu());
 		frame.add(center, BorderLayout.CENTER);
 		// Return here for the other GUI components
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frame.addWindowListener(WindowListenerFactory.
+				windowClosingFactory(e -> exit()));
+		model.setCurrentState(States.NOTHING_LOADED);
+		animator.start();
+		model.getCurrentState().enter();
+		setChanged();
+		notifyObservers();
 		// return HERE for other setup details
 		frame.setVisible(true);
 	}

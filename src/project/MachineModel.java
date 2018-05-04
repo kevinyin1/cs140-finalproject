@@ -204,6 +204,12 @@ public class MachineModel {
 			cpu.incrementIP(1);
 		});	
 		
+		//INSTRUCTION_MAP entry for "JUMPN"
+		INSTRUCTIONS.put(0x1D, arg -> {
+			int arg1 = memory.getData(cpu.memoryBase+arg);
+			cpu.instructionPointer = currentJob.getStartCodeIndex() + arg1;
+		});
+		
 		//INSTRUCTION_MAP entry for "HALT"
 		INSTRUCTIONS.put(0x1F, arg -> {
 			callback.halt();
