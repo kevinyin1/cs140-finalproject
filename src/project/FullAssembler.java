@@ -18,7 +18,7 @@ public class FullAssembler implements Assembler {
 				code.add(input.nextLine());
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("File " + inputFileName + ".pasm Not Found");
+			System.out.println("File " + inputFileName + " Not Found");
 			return -1;
 		}
 		boolean endOfCode = false, readingCode = true;
@@ -27,7 +27,7 @@ public class FullAssembler implements Assembler {
 			String[] arr_code = code.get(i).trim().split("\\s+");
 			// appends an error for an illegal blank line
 			if (endOfCode && !(code.get(i).trim().length() == 0)) {
-				error.append("\nError (" + inputFileName + ".pasm, " + lineOfEnd + "): illegal blank line");
+				error.append("\nError (" + inputFileName + ", " + lineOfEnd + "): illegal blank line");
 				endOfCode = false;
 			}
 			// Checks if it is the end of the code or not
@@ -39,13 +39,13 @@ public class FullAssembler implements Assembler {
 			// Checks for white spaces or tabs in the beginning
 			if (code.get(i).charAt(0) == ' ' || code.get(i).charAt(0) == '\t') {
 				error.append(
-						"\nError (" + inputFileName + ".pasm, " + (i + 1) + "): line starts with illegal white space");
+						"\nError (" + inputFileName + ", " + (i + 1) + "): line starts with illegal white space");
 				continue;
 			}
 			// Checks if DATA is uppercase
 			if (arr_code[0].toUpperCase().equals("DATA") && !arr_code[0].equals("DATA")) {
 				error.append(
-						"\nError (" + inputFileName + ".pasm, " + (i + 1) + "): line does not have DATA in upper case");
+						"\nError (" + inputFileName + ", " + (i + 1) + "): line does not have DATA in upper case");
 				readingCode = false;
 				continue;
 			}
@@ -57,7 +57,7 @@ public class FullAssembler implements Assembler {
 			}
 			// Checks if there is a second DATA separator
 			if (arr_code[0].equals("DATA") && !readingCode) {
-				error.append("\nError (" + inputFileName + ".pasm, " + (i + 1) + "): line has a second DATA separator");
+				error.append("\nError (" + inputFileName + ", " + (i + 1) + "): line has a second DATA separator");
 				continue;
 			}
 			// Reads in data
@@ -68,7 +68,7 @@ public class FullAssembler implements Assembler {
 					continue;
 				}
 				if (arr_code.length != 2) {
-					error.append("\nError (" + inputFileName + ".pasm, " + (i + 1)
+					error.append("\nError (" + inputFileName + ", " + (i + 1)
 							+ "): needs 2 number inputs");
 					continue;
 				}
@@ -76,7 +76,7 @@ public class FullAssembler implements Assembler {
 				try {
 					int arg = Integer.parseInt(arr_code[0], 16);
 				} catch (NumberFormatException e) {
-					error.append("\nError (" + inputFileName + ".pasm, " + (i + 1)
+					error.append("\nError (" + inputFileName + ", " + (i + 1)
 							+ "): memory address is non-numeric");
 					continue;
 				}
@@ -84,33 +84,33 @@ public class FullAssembler implements Assembler {
 				try {
 					int arg = Integer.parseInt(arr_code[1], 16);
 				} catch (NumberFormatException e) {
-					error.append("\nError (" + inputFileName + ".pasm, " + (i + 1)
+					error.append("\nError (" + inputFileName + ", " + (i + 1)
 							+ "): memory value is non-numeric");
 					continue;
 				}
 			}
 			// Checks if the entered mnemonic is correct
 			if (readingCode && !InstrMap.toCode.keySet().contains(arr_code[0].toUpperCase())) {
-				error.append("\nError (" + inputFileName + ".pasm, " + (i + 1) + "): illegal mnemonic");
+				error.append("\nError (" + inputFileName + ", " + (i + 1) + "): illegal mnemonic");
 				continue;
 			}
 			// Checks for uppercase in mnemonic
 			if (readingCode && !arr_code[0].equals(arr_code[0].toUpperCase())) {
-				error.append("\nError (" + inputFileName + ".pasm, " + (i + 1) + "): mnemonic must be upper case");
+				error.append("\nError (" + inputFileName + ", " + (i + 1) + "): mnemonic must be upper case");
 				continue;
 			}
 			if (readingCode && ((noArgument.contains(arr_code[0]) && arr_code.length > 1))) {
-				error.append("\nError (" + inputFileName + ".pasm, " + (i + 1) + "): " + arr_code[0]
+				error.append("\nError (" + inputFileName + ", " + (i + 1) + "): " + arr_code[0]
 						+ " cannot take arguments");
 				continue;
 			}
 			if (readingCode && (!noArgument.contains(arr_code[0]) && (arr_code.length < 2))) {
-				error.append("\nError (" + inputFileName + ".pasm, " + (i + 1) + "): " + arr_code[0]
+				error.append("\nError (" + inputFileName + ", " + (i + 1) + "): " + arr_code[0]
 						+ " is missing an argument");
 				continue;
 			}
 			if (readingCode && (!noArgument.contains(arr_code[0]) && (arr_code.length > 2))) {
-				error.append("\nError (" + inputFileName + ".pasm, " + (i + 1) + "): " + arr_code[0]
+				error.append("\nError (" + inputFileName + ", " + (i + 1) + "): " + arr_code[0]
 						+ " has too many arguments");
 				continue;
 			}
@@ -118,7 +118,7 @@ public class FullAssembler implements Assembler {
 				try {
 					int arg = Integer.parseInt(arr_code[1], 16);
 				} catch (NumberFormatException e) {
-					error.append("\nError (" + inputFileName + ".pasm, " + (i + 1) + "): " + arr_code[1]
+					error.append("\nError (" + inputFileName + ", " + (i + 1) + "): " + arr_code[1]
 							+ " argument is not a hex number");
 				}
 			}

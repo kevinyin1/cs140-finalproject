@@ -60,15 +60,15 @@ public class MenuBarBuilder implements Observer {
 	public JMenu createJobsMenu() {
 		JMenu menu = new JMenu("Jobs");
 		menu.setMnemonic(KeyEvent.VK_J);
-		job0.setMnemonic(KeyEvent.VK_0);
+		job0.setMnemonic(KeyEvent.VK_N);
 		job0.setAccelerator(KeyStroke.getKeyStroke(
-				KeyEvent.VK_0, ActionEvent.CTRL_MASK));
+				KeyEvent.VK_N, ActionEvent.CTRL_MASK));
 		job0.addActionListener(e -> view.setJob(0));
 		menu.add(job0);
 		menu.addSeparator();
-		job1.setMnemonic(KeyEvent.VK_1);
+		job1.setMnemonic(KeyEvent.VK_M);
 		job1.setAccelerator(KeyStroke.getKeyStroke(
-				KeyEvent.VK_1, ActionEvent.CTRL_MASK));
+				KeyEvent.VK_M, ActionEvent.CTRL_MASK));
 		job1.addActionListener(e -> view.setJob(1));
 		menu.add(job1);
 		return menu;

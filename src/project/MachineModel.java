@@ -21,7 +21,7 @@ public class MachineModel {
 	private Memory memory = new Memory();
 	private HaltCallback callback;
 	private boolean withGUI;
-	private Job currentJob = new Job();
+	private Job currentJob;
 	Job[] jobs = new Job[2];
 	
 	
@@ -32,8 +32,9 @@ public class MachineModel {
 	public MachineModel(boolean withGUI, HaltCallback callback) {
 		this.withGUI = withGUI;
 		this.callback = callback;
-		jobs[0] = currentJob;
+		currentJob = new Job();
 		jobs[1] = new Job();
+		jobs[0] = currentJob;
 		jobs[0].setStartCodeIndex(0);
 		jobs[0].setStartMemoryIndex(0);
 		jobs[0].setCurrentState(States.NOTHING_LOADED);
@@ -259,10 +260,11 @@ public class MachineModel {
 		if (i != 1 && i != 0) throw new IllegalArgumentException("invalid argument");
 		currentJob.setCurrentAcc(getAccumulator());
 		currentJob.setCurrentIP(getInstructionPointer());
-		jobs[i] = currentJob;
+		currentJob = jobs[i];
 		setAccumulator(currentJob.getCurrentAcc());
 		setInstructionPointer(currentJob.getCurrentIP());
 		setMemoryBase(currentJob.getStartMemoryIndex());
+		System.out.println("Job set to " + i);
 	}
 	
 	public States getCurrentState() {
